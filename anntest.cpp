@@ -314,6 +314,7 @@ vx_tensor openvx_output[num_gpu];
 std::thread * threadDeviceProcess[num_gpu];
 
 void processDevice(int gpu) {
+    std::unique_lock<std::mutex> lock(mutex);
     vx_status status = vxProcessGraph(openvx_graph[gpu]);
     if(status != VX_SUCCESS) {
         printf("ERROR: vxProcessGraph() failed (%d)\n", status);
